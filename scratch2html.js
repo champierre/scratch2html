@@ -29,6 +29,18 @@
       });
     };
 
+    ext.br = function(str) {
+      $.post('http://localhost:5678/add', {tag: '<br />'}, function() {
+          console.log('add tag: <br />');
+      });
+    };
+
+    ext.img = function(str) {
+      $.post('http://localhost:5678/add', {tag: '<img src="' + str + '">'}, function() {
+          console.log('add tag: <img src="' + str + '">');
+      });
+    };
+
     ext.body_end = function() {
       $.post('http://localhost:5678/add', {tag: '</body>'}, function() {
           console.log('add tag: </body>');
@@ -45,8 +57,10 @@
         blocks: [
             [' ', '<html>', 'html'],
             [' ', '<body>', 'body'],
-            [' ', '<h1> %s </h1>', 'h1', '     '],
-            [' ', '<p> %s </p>', 'p', '     '],
+            [' ', '<h1> %s </h1>', 'h1', 'h1'],
+            [' ', '<p> %s </p>', 'p', 'p'],
+            [' ', '<br />', 'br'],
+            [' ', '<img src=" %s ">', 'img', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
             [' ', '</body>', 'body_end'],
             [' ', '</html>', 'html_end'],
         ]
