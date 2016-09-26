@@ -2,7 +2,7 @@
 
 Scratch2HTML is [ScratchX](http://scratchx.org/) extension that enable to build HTML page using Scratch blocks.
 
-[![Scratch2HTML Demo](http://champierre.github.io/scratch2html/images/scratch2html.gif)]
+![Scratch2HTML Demo](http://champierre.github.io/scratch2html/images/scratch2html.gif)
 
 ## Install Helper App
 
@@ -26,11 +26,11 @@ To use Scratch2HTML, you need to install Helper App. You need Ruby to run it.
 
 	```
 	cd workdir
-	scratch2html.rb
+	ruby scratch2html.rb
 	```
 
-5. Build HTML page using Scratch blocks.
+5. Build HTML page using Scratch blocks, and click it to send to the Helper App.
 
-	![blocks](http://champierre.github.io/scratch2mip/images/blocks.png)
+	![blocks](http://champierre.github.io/scratch2html/images/blocks.png)
 
 6. From a browser, access to http://localhost:5678/.
