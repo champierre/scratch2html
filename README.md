@@ -30,7 +30,8 @@ To use Scratch2HTML, you need to install Helper App. You need Ruby to run it.
 	```
 
 5. Build HTML page using Scratch blocks, and click it to send to the Helper App.
-
-	![blocks](http://champierre.github.io/scratch2html/images/blocks.png)
-
 6. From a browser, access to http://localhost:5678/.
+
+![sample 1](http://champierre.github.io/scratch2html/images/sample1.png)
+
+![sample 2](http://champierre.github.io/scratch2html/images/sample2.png)
