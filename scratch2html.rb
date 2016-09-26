@@ -15,8 +15,11 @@ loop do
     data = client.read(headers["Content-Length"].to_i)
     params = Hash[URI::decode_www_form(data)]
     html = '' if params['tag'] =~ /^<html>/
-    html = html + params['tag']
-    p html
+    html = html + "#{params['tag']}\n"
+    if params['tag'] =~ /^<\/html>/
+      puts "=== #{Time.now} ==="
+      puts html
+    end
   else
     client.puts "HTTP/1.0 200 OK"
     client.puts "Content-Type: text/html"
