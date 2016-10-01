@@ -1,5 +1,5 @@
 (function(ext) {
-    
+
 /*!
  * JavaScript Cookie v2.1.3
  * https://github.com/js-cookie/js-cookie
@@ -158,10 +158,10 @@
 }));
 
     var html;
-//    var domain = ".com";
-    var domain = ".dev";
-    
-    var username = Cookies.get('scratch2html_username');
+    var domain = ".com";
+//    var domain = ".dev";
+
+    var username = Cookies.get('scratch2html_username') ? Cookies.get('scratch2html_username') : 'www' ;
     var password = Cookies.get('scratch2html_password');
     var slug;
 
@@ -286,18 +286,18 @@
         password = str;
         Cookies.set('scratch2html_password', str, { expires: 90 });
     };
-    
-    
+
+
     ext.publish = function(str1, str2) {
         username = str1
         slug = str2
         Cookies.set('scratch2html_username', username, { expires: 90 });
-        
+
         $.post('http://' + username + '.scratch2html' + domain + '/sites.json', {'site[slug]': slug, 'site[html]': html, password: password}, function() {
             console.log('post:' + html);
         });
     };
-    
+
     ext.open_page = function() {
         window.open('http://' + username + '.scratch2html' +  domain + '/' + slug, '_blank');
     }
@@ -325,5 +325,5 @@
     };
 
     ScratchExtensions.register('Scratch2HTML', descriptor, ext);
-    
+
 })({});
