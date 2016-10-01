@@ -158,9 +158,12 @@
 }));
 
     var html;
-    var host = "http://www.scratch2html.com";
-//    var host = "http://localhost:3000";
-    var password = Cookies.get('scratch2html_pw');
+//    var domain = ".com";
+    var domain = ".dev";
+    
+    var username = Cookies.get('scratch2html_username');
+    var password = Cookies.get('scratch2html_password');
+    var slug;
 
     ext._shutdown = function() {};
 
@@ -281,15 +284,23 @@
 
     ext.set_password = function(str) {
         password = str;
-        Cookies.set('scratch2html_pw', str, { expires: 90 });
+        Cookies.set('scratch2html_password', str, { expires: 90 });
     };
     
     
-    ext.publish = function(str) {
-        $.post(host + '/sites.json', {'site[slug]': str, 'site[html]': html}, function() {
+    ext.publish = function(str1, str2) {
+        username = str1
+        slug = str2
+        Cookies.set('scratch2html_username', username, { expires: 90 });
+        
+        $.post('http://' + username + '.scratch2html' + domain + '/sites.json', {'site[slug]': slug, 'site[html]': html, password: password}, function() {
             console.log('post:' + html);
         });
     };
+    
+    ext.open_page = function() {
+        window.open('http://' + username + '.scratch2html' +  domain + '/' + slug, '_blank');
+    }
 
     var descriptor = {
         blocks: [
@@ -308,7 +319,8 @@
             [' ', '</body>', 'body_end'],
             [' ', '</html>', 'html_end'],
             [' ', 'Set password to %s', 'set_password', password],
-            [' ', 'Publish to http://www.scratch2html.com/ %s', 'publish', '']
+            [' ', 'Publish to http:// %s .scratch2html.com/ %s', 'publish', username, ''],
+            [' ', 'Open page', 'open_page']
         ]
     };
 
