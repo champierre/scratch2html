@@ -165,6 +165,13 @@
     var password = Cookies.get('scratch2html_password');
     var slug;
 
+    function processTag(tag) {
+      html += tag;
+      $.post('http://localhost:5678/add', {tag: tag}, function() {
+          console.log('add tag:' + tag);
+      });
+    }
+
     ext._shutdown = function() {};
 
     ext._getStatus = function() {
@@ -178,108 +185,84 @@
         });
     };
 
+    ext.head = function() {
+        tag = '<head>';
+        processTag(tag);
+    };
+
+    ext.refresh = function(str) {
+        tag = '<meta http-equiv="refresh" content="' + str + '">';
+        processTag(tag);
+    };
+
+    ext.head_end = function() {
+        tag = '</head>';
+        processTag(tag);
+    };
+
     ext.body = function() {
         tag = '<body>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag: <body>');
-        });
+        processTag(tag);
     };
 
     ext.h1 = function(str) {
         tag = '<h1>' + str + '</h1>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.h2 = function(str) {
         tag = '<h2>' + str + '</h2>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.p = function(str) {
         tag = '<p>' + str + '</p>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: '<p>' + str + '</p>'}, function() {
-            console.log('add tag: <p>' + str + '</p>');
-        });
+        processTag(tag);
     };
 
     ext.br = function(str) {
         tag = '<br />';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: '<br />'}, function() {
-            console.log('add tag: <br />');
-        });
+        processTag(tag);
     };
 
     ext.img = function(str) {
         tag = '<img src="' + str + '">';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: '<img src="' + str + '">'}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.table = function() {
         tag = '<table border="1">';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.tr = function() {
         tag = '<tr>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.td = function(str) {
         tag = '<td>' + str + '</td>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.tr_end = function() {
         tag = '</tr>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.table_end = function() {
         tag = '</table>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.body_end = function() {
         tag = '</body>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.html_end = function() {
         tag = '</html>';
-        html += tag;
-        $.post('http://localhost:5678/add', {tag: tag}, function() {
-            console.log('add tag:' + tag);
-        });
+        processTag(tag);
     };
 
     ext.set_password = function(str) {
@@ -287,12 +270,10 @@
         Cookies.set('scratch2html_password', str, { expires: 90 });
     };
 
-
     ext.publish = function(str1, str2) {
         username = str1
         slug = str2
         Cookies.set('scratch2html_username', username, { expires: 90 });
-
         $.post('http://' + username + '.scratch2html' + domain + '/sites.json', {'site[slug]': slug, 'site[html]': html, password: password}, function() {
             console.log('post:' + html);
         });
@@ -305,6 +286,9 @@
     var descriptor = {
         blocks: [
             [' ', '<html>', 'html'],
+            [' ', '<head>', 'head'],
+            [' ', '<meta http-equiv="refresh" content=" %s ">', 'refresh', '5'],
+            [' ', '</head>', 'head_end'],
             [' ', '<body>', 'body'],
             [' ', '<h1> %s </h1>', 'h1', 'h1'],
             [' ', '<h2> %s </h2>', 'h2', 'h2'],
