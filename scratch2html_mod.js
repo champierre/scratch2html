@@ -311,7 +311,7 @@
             [' ', '<h2 id =" %s " class = " %s "> %s </h2>', 'h2', 'h2_id', 'h2_class', 'h2'],
             [' ', '<p id =" %s " class = " %s "> %s </p>', 'p', 'p_id', 'p_class', 'p'],
             [' ', '<br />', 'br'],
-            [' ', '<table id =" %s " class = " border=" %n ">', 'table', 'table_id', 'table_class', 1],
+            [' ', '<table id =" %s " class = " %s " border=" %n ">', 'table', 'table_id', 'table_class', 1],
             [' ', '<tr id =" %s " class = " %s ">', 'tr', 'tr_id', 'tr_class'],
             [' ', '<td id =" %s " class = " %s "> %s </td>', 'td', 'td_id', 'td_class', 'td'],
             [' ', '<img id =" %s " class = " %s " src=" %s ">', 'img', 'img_id', 'img_class', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
