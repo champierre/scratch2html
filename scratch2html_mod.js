@@ -166,8 +166,8 @@
     var slug;
 
     function processTag(tag) {
-      if (tag == '<html>') {
-          html = '<html>';
+      if (tag == '<!DOCTYPE html>') {
+          html = '<!DOCTYPE html>';
       } else {
           html += tag;
       }
@@ -182,6 +182,11 @@
         return {status: 2, msg: 'Ready'};
     };
 
+    ext.doctype = function() {
+        tag = '<!DOCTYPE html>';
+        processTag(tag);
+    };
+
     ext.html = function() {
         tag = '<html>';
         processTag(tag);
@@ -189,6 +194,11 @@
 
     ext.head = function() {
         tag = '<head>';
+        processTag(tag);
+    };
+
+    ext.charset = function() {
+        tag = '<meta charset="utf-8" />';
         processTag(tag);
     };
 
@@ -208,16 +218,43 @@
     };
 
     ext.h1 = function(str1, str2, str3) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (str3 == undefined) {
+          str3 = "";
+        }
         tag = '<h1 id ="' + str1 + '" class="' + str2 + '">' + str3 + '</h1>';
         processTag(tag);
     };
 
     ext.h2 = function(str1, str2, str3) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (str3 == undefined) {
+          str3 = "";
+        }
         tag = '<h2 id ="' + str1 + '" class="' + str2 + '">' + str3 + '</h2>';
         processTag(tag);
     };
 
     ext.p = function(str1, str2, str3) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (str3 == undefined) {
+          str3 = "";
+        }
         tag = '<p id ="' + str1 + '" class="' + str2 + '">' + str3 + '</p>';
         processTag(tag);
     };
@@ -228,21 +265,54 @@
     };
 
     ext.img = function(str1, str2, str3) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (str3 == undefined) {
+          str3 = "";
+        }
         tag = '<img id ="' + str1 + '" class="' + str2 + '" src="' + str3 + '">';
         processTag(tag);
     };
 
     ext.table = function(str1, str2, n) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (n == undefined) {
+          n = 0;
+        }
         tag = '<table id ="' + str1 + '" class="' + str2 + '" border="' + n + '">';
         processTag(tag);
     };
 
     ext.tr = function(str1, str2) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
         tag = '<tr id ="' + str1 + '" class="' + str2 + '">';
         processTag(tag);
     };
 
     ext.td = function(str1, str2, str3) {
+        if (str1 == undefined) {
+          str1 = "";
+        }
+        if (str2 == undefined) {
+          str2 = "";
+        }
+        if (str3 == undefined) {
+          str3 = "";
+        }
         tag = '<td id ="' + str1 + '" class="' + str2 + '">' + str3 + '</td>';
         processTag(tag);
     };
@@ -286,45 +356,65 @@
     }
 
     ext.new_tag = function(str) {
+        if (str == undefined) {
+          str = "";
+        }
         tag = '<' + str + '>';
         processTag(tag);
     };
 
     ext.new_tag_end = function(str) {
+        if (str == undefined) {
+          str = "";
+        }
         tag = '</' + str + '>';
         processTag(tag);
     };
 
     ext.style = function(str) {
-        tag = '<style type="text/css">\n<!--\n' + str + '\n-->\n</style>';
+        if (str == undefined) {
+          str = "";
+        }
+        tag = '<style type="text/css"><!--' + str + '--></style>';
+        processTag(tag);
+    };
+
+    ext.javascript = function(str) {
+        if (str == undefined) {
+          str = "";
+        }
+        tag = '<script type="text/javascript">' + str + '</script>';
         processTag(tag);
     };
 
     var descriptor = {
         blocks: [
+            [' ', '<!DOCTYPE html>', 'doctype'],
             [' ', '<html>', 'html'],
             [' ', '<head>', 'head'],
             [' ', '<meta http-equiv="refresh" content=" %s ">', 'refresh', '5'],
+            [' ', '<meta charset="utf-8" />', 'charset'],
+            [' ', '<style type="text/css"> %s </stle>', 'style', 'p{color:red;font-weight:bold;}'],
             [' ', '</head>', 'head_end'],
             [' ', '<body>', 'body'],
-            [' ', '<h1 id =" %s " class = " %s "> %s </h1>', 'h1', 'h1_id', 'h1_class', 'h1'],
-            [' ', '<h2 id =" %s " class = " %s "> %s </h2>', 'h2', 'h2_id', 'h2_class', 'h2'],
-            [' ', '<p id =" %s " class = " %s "> %s </p>', 'p', 'p_id', 'p_class', 'p'],
+            [' ', '<h1 id =" %s " class = " %s "> %s </h1>', 'h1', '', '', 'h1'],
+            [' ', '<h2 id =" %s " class = " %s "> %s </h2>', 'h2', '', '', 'h2'],
+            [' ', '<p id =" %s " class = " %s "> %s </p>', 'p', '', '', 'p'],
             [' ', '<br />', 'br'],
-            [' ', '<table id =" %s " class = " %s " border=" %n ">', 'table', 'table_id', 'table_class', 1],
-            [' ', '<tr id =" %s " class = " %s ">', 'tr', 'tr_id', 'tr_class'],
-            [' ', '<td id =" %s " class = " %s "> %s </td>', 'td', 'td_id', 'td_class', 'td'],
-            [' ', '<img id =" %s " class = " %s " src=" %s ">', 'img', 'img_id', 'img_class', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
+            [' ', '<table id =" %s " class = " %s " border=" %n ">', 'table', '', '', 1],
+            [' ', '<tr id =" %s " class = " %s ">', 'tr', '', ''],
+            [' ', '<td id =" %s " class = " %s "> %s </td>', 'td', '', '', 'td'],
+            [' ', '<img id =" %s " class = " %s " src=" %s ">', 'img', '', '', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
             [' ', '</tr>', 'tr_end'],
             [' ', '</table>', 'table_end'],
+            [' ', '< %s >', 'new_tag', 'div'],
+            [' ', '</ %s >', 'new_tag_end', 'div'],
+            [' ', '<script type="text/javascript"> %s </script>', 'javascript', 'alert("Hello Scratch2HTML");'],
             [' ', '</body>', 'body_end'],
             [' ', '</html>', 'html_end'],
             [' ', 'Set password to %s', 'set_password', password],
             [' ', 'Publish to http:// %s .scratch2html.com/ %s', 'publish', username, ''],
             [' ', 'Open page', 'open_page'],
-            [' ', '< %s >', 'new_tag', 'div'],
-            [' ', '</ %s >', 'new_tag_end', 'div'],
-            [' ', '<style type="text/css"> %s </stle>', 'style', 'p{color:red;font-weight:bold;}'],
         ]
     };
 
