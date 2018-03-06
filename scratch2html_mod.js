@@ -371,6 +371,14 @@
         processTag(tag);
     };
 
+    ext.blank = function(str) {
+        if (str == undefined) {
+          str = "";
+        }
+        tag =  str;
+        processTag(tag);
+    };
+
     ext.style = function(str) {
         if (str == undefined) {
           str = "";
@@ -384,6 +392,11 @@
           str = "";
         }
         tag = '<script type="text/javascript">' + str + '</script>';
+        processTag(tag);
+    };
+
+    ext.jquery = function(str) {
+        tag = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>';
         processTag(tag);
     };
 
@@ -409,7 +422,9 @@
             [' ', '</table>', 'table_end'],
             [' ', '< %s >', 'new_tag', 'div'],
             [' ', '</ %s >', 'new_tag_end', 'div'],
+            [' ', ' %s ', 'blank', 'blank'],
             [' ', '<script type="text/javascript"> %s </script>', 'javascript', 'alert("Hello Scratch2HTML");'],
+            [' ', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>', 'jquery'],
             [' ', '</body>', 'body_end'],
             [' ', '</html>', 'html_end'],
             [' ', 'Set password to %s', 'set_password', password],
