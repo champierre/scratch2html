@@ -168,6 +168,8 @@
     function processTag(tag) {
       if (tag == '<!DOCTYPE html>') {
           html = '<!DOCTYPE html>';
+      } else if (tag == '<html>' && html != '<!DOCTYPE html>') {
+          html = '<html>';
       } else {
           html += tag;
       }
@@ -197,6 +199,14 @@
         processTag(tag);
     };
 
+    ext.title = function(str1) {
+        if (str1 == undefined) {
+           str1 = "";
+        }
+        tag = '<title>' + str + '</title>';
+        processTag(tag);
+    };
+
     ext.charset = function() {
         tag = '<meta charset="utf-8" />';
         processTag(tag);
@@ -217,103 +227,130 @@
         processTag(tag);
     };
 
-    ext.h1 = function(str1, str2, str3) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.h1 = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<h1>' + str2 + '</h1>';
+        } else {
+           tag = '<h1 ' + str1 + '>' + str2 + '</h1>';
         }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        if (str3 == undefined) {
-          str3 = "";
-        }
-        tag = '<h1 id ="' + str1 + '" class="' + str2 + '">' + str3 + '</h1>';
         processTag(tag);
     };
 
-    ext.h2 = function(str1, str2, str3) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.h2 = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<h2>' + str2 + '</h2>';
+        } else {
+            tag = '<h2 ' + str1 + '>' + str2 + '</h2>';
         }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        if (str3 == undefined) {
-          str3 = "";
-        }
-        tag = '<h2 id ="' + str1 + '" class="' + str2 + '">' + str3 + '</h2>';
         processTag(tag);
     };
 
-    ext.p = function(str1, str2, str3) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.p = function(str1) {
+        if (str1 == "") {
+            tag = '<p>';
+        } else {
+            tag = '<p ' + str1 + '>';
         }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        if (str3 == undefined) {
-          str3 = "";
-        }
-        tag = '<p id ="' + str1 + '" class="' + str2 + '">' + str3 + '</p>';
         processTag(tag);
     };
 
+    ext.p_end = function() {
+        tag = '</p>';
+        processTag(tag);
+    };
+    
+    ext.div = function(str1) {
+        if (str1 == "") {
+            tag = '<div>';
+        } else {
+            tag = '<div ' + str1 + '>';
+        }
+        processTag(tag);
+    };
+
+    ext.div_end = function() {
+        tag = '</div>';
+        processTag(tag);
+    };
+    
+    ext.span = function(str1) {
+        if (str1 == "") {
+            tag = '<span>';
+        } else {
+            tag = '<span ' + str1 + '>';
+        }
+        processTag(tag);
+    };
+
+    ext.span_end = function() {
+        tag = '</span>';
+        processTag(tag);
+    };
+      
     ext.br = function(str) {
-        tag = '<br />';
+        tag = '<br>';
         processTag(tag);
     };
 
-    ext.img = function(str1, str2, str3) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.img = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<img src="' + str2 + '">';
+        } else {
+            tag = '<img ' + str1 + ' src="' + str2 + '">';
         }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        if (str3 == undefined) {
-          str3 = "";
-        }
-        tag = '<img id ="' + str1 + '" class="' + str2 + '" src="' + str3 + '">';
         processTag(tag);
     };
 
-    ext.table = function(str1, str2, n) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.a = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<a href="' + str2 + '">';
+        } else {
+            tag = '<a ' + str1 + ' href="' + str2 + '">';
         }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        if (n == undefined) {
-          n = 0;
-        }
-        tag = '<table id ="' + str1 + '" class="' + str2 + '" border="' + n + '">';
         processTag(tag);
     };
 
-    ext.tr = function(str1, str2) {
-        if (str1 == undefined) {
-          str1 = "";
-        }
-        if (str2 == undefined) {
-          str2 = "";
-        }
-        tag = '<tr id ="' + str1 + '" class="' + str2 + '">';
+    ext.a_end = function() {
+        tag = '</a>';
         processTag(tag);
     };
 
-    ext.td = function(str1, str2, str3) {
-        if (str1 == undefined) {
-          str1 = "";
+    ext.table = function(str1, n) {
+        if (n == "" || isNaN(n)) {
+            n = 0;
         }
-        if (str2 == undefined) {
-          str2 = "";
+        if (str1 == "") {
+            tag = '<table border="' + n + '">';
+        } else {
+            tag = '<table ' + str1 + ' border="' + n + '">';
         }
-        if (str3 == undefined) {
-          str3 = "";
+        processTag(tag);
+    };
+
+    ext.tr = function(str1) {
+        if (str1 == "") {
+            tag = '<tr>';
+        } else {
+            tag = '<tr ' + str1 + '>';
         }
-        tag = '<td id ="' + str1 + '" class="' + str2 + '">' + str3 + '</td>';
+        processTag(tag);
+    };
+
+    ext.th = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<th>' + str2 + '</th>';
+        } else {
+            tag = '<th ' + str1 + '>' + str2 + '</th>';
+        }
+        processTag(tag);
+    };
+
+    ext.td = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<td>' + str2 + '</td>';
+        } else {
+            tag = '<td ' + str1 + '>' + str2 + '</td>';
+        }
         processTag(tag);
     };
 
@@ -324,6 +361,48 @@
 
     ext.table_end = function() {
         tag = '</table>';
+        processTag(tag);
+    };
+
+    ext.ul = function(str1) {
+        if (str1 == "") {
+            tag = '<ul>';
+        } else {
+            tag = '<ul ' + str1 + '>';
+        }
+        processTag(tag);
+    };
+
+    ext.ol = function(str1) {
+        if (str1 == "") {
+            tag = '<ol>';
+        } else {
+            tag = '<ol ' + str1 + '>';
+        }
+        processTag(tag);
+    };
+
+    ext.li = function(str1, str2) {
+        if (str1 == "") {
+            tag = '<li>';
+        } else {
+            tag = '<li ' + str1 + '>';
+        }
+        processTag(tag);
+    };
+
+    ext.ul_end = function() {
+        tag = '</ul>';
+        processTag(tag);
+    };
+
+    ext.ol_end = function() {
+        tag = '</ol>';
+        processTag(tag);
+    };
+
+    ext.li_end = function() {
+        tag = '</li>';
         processTag(tag);
     };
 
@@ -356,42 +435,42 @@
     }
 
     ext.new_tag = function(str) {
-        if (str == undefined) {
-          str = "";
-        }
         tag = '<' + str + '>';
         processTag(tag);
     };
 
     ext.new_tag_end = function(str) {
-        if (str == undefined) {
-          str = "";
-        }
         tag = '</' + str + '>';
         processTag(tag);
     };
 
     ext.blank = function(str) {
-        if (str == undefined) {
-          str = "";
-        }
         tag =  str;
         processTag(tag);
     };
 
-    ext.style = function(str) {
-        if (str == undefined) {
-          str = "";
-        }
-        tag = '<style type="text/css"><!--' + str + '--></style>';
+    ext.css = function(str) {
+        tag = '<style type="text/css"><!--';
+        processTag(tag);
+    };
+
+    ext.css_content = function(str1, str2) {
+        tag = str1 + '{' + str2 + '}';
+        processTag(tag);
+    };
+
+    ext.css_end = function() {
+        tag = '--></style>';
         processTag(tag);
     };
 
     ext.javascript = function(str) {
-        if (str == undefined) {
-          str = "";
-        }
-        tag = '<script type="text/javascript">' + str + '</script>';
+        tag = '<script type="text/javascript">';
+        processTag(tag);
+    };
+
+    ext.javascript_end = function() {
+        tag = '</script>';
         processTag(tag);
     };
 
@@ -405,26 +484,44 @@
             [' ', '<!DOCTYPE html>', 'doctype'],
             [' ', '<html>', 'html'],
             [' ', '<head>', 'head'],
+            [' ', '<title>  %s  </title>', 'title', 'title_name'],
             [' ', '<meta http-equiv="refresh" content=" %s ">', 'refresh', '5'],
             [' ', '<meta charset="utf-8" />', 'charset'],
-            [' ', '<style type="text/css"> %s </stle>', 'style', 'p{color:red;font-weight:bold;}'],
+            [' ', '<style type="text/css">', 'css'],
+            [' ', '%s { %s }', 'css_content', 'p', 'color:red;font-weight:bold;'],
+            [' ', '</style>', 'css_end'],
+            [' ', '<script type="text/javascript">', 'javascript'],
+            [' ', '</script>', 'javascript_end'],
+            [' ', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>', 'jquery'],
             [' ', '</head>', 'head_end'],
             [' ', '<body>', 'body'],
-            [' ', '<h1 id =" %s " class = " %s "> %s </h1>', 'h1', '', '', 'h1'],
-            [' ', '<h2 id =" %s " class = " %s "> %s </h2>', 'h2', '', '', 'h2'],
-            [' ', '<p id =" %s " class = " %s "> %s </p>', 'p', '', '', 'p'],
-            [' ', '<br />', 'br'],
-            [' ', '<table id =" %s " class = " %s " border=" %n ">', 'table', '', '', 1],
-            [' ', '<tr id =" %s " class = " %s ">', 'tr', '', ''],
-            [' ', '<td id =" %s " class = " %s "> %s </td>', 'td', '', '', 'td'],
-            [' ', '<img id =" %s " class = " %s " src=" %s ">', 'img', '', '', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
+            [' ', '<h1 %s > %s </h1>', 'h1', '', 'header1'],
+            [' ', '<h2 %s > %s </h2>', 'h2', '', 'header2'],
+            [' ', '<p %s >', 'p', ''],
+            [' ', '</p>', 'p_end'],
+            [' ', '<div %s >', 'div', ''],
+            [' ', '</div>', 'div_end'],
+            [' ', '<span %s >', 'span', ''],
+            [' ', '</span>', 'span_end'],
+            [' ', '<br>', 'br'],
+            [' ', '<img %s src=" %s ">', 'img', '', 'https://wiki.scratch.mit.edu/w/images/Cat.png'],
+            [' ', '<a %s href=" %s ">', 'a', '', 'https://www.google.co.jp/'],
+            [' ', '</a>', 'a_end'],
+            [' ', '<table  %s  border=" %n ">', 'table', '', 1],
+            [' ', '<tr %s >', 'tr', ''],
+            [' ', '<th %s > %s </th>', 'th', '', 'table_header'],
+            [' ', '<td %s > %s </td>', 'td', '', 'table_data'],
             [' ', '</tr>', 'tr_end'],
             [' ', '</table>', 'table_end'],
-            [' ', '< %s >', 'new_tag', 'div'],
-            [' ', '</ %s >', 'new_tag_end', 'div'],
+            [' ', '<ul  %s >', 'ul', ''],
+            [' ', '<ol %s >', 'ol', ''],
+            [' ', '<li %s >', 'li', ''],
+            [' ', '</ul>', 'ul_end'],
+            [' ', '</ol>', 'ol_end'],
+            [' ', '</li>', 'li_end'],
+            [' ', '< %s >', 'new_tag', 'tag'],
+            [' ', '</ %s >', 'new_tag_end', 'tag'],
             [' ', ' %s ', 'blank', 'blank'],
-            [' ', '<script type="text/javascript"> %s </script>', 'javascript', 'alert("Hello Scratch2HTML");'],
-            [' ', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>', 'jquery'],
             [' ', '</body>', 'body_end'],
             [' ', '</html>', 'html_end'],
             [' ', 'Set password to %s', 'set_password', password],
