@@ -203,7 +203,7 @@
         if (str1 == undefined) {
            str1 = "";
         }
-        tag = '<title>' + str + '</title>';
+        tag = '<title>' + str1 + '</title>';
         processTag(tag);
     };
 
