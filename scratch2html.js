@@ -479,6 +479,13 @@
         processTag(tag);
     };
 
+    ext.offline_page = function() {
+        nwin = window.open("");
+        nwin.document.open();
+        nwin.document.write(html);
+        nwin.document.close();
+    }
+
     var descriptor = {
         blocks: [
             [' ', '<!DOCTYPE html>', 'doctype'],
@@ -527,6 +534,7 @@
             [' ', 'Set password to %s', 'set_password', password],
             [' ', 'Publish to http:// %s .scratch2html.com/ %s', 'publish', username, ''],
             [' ', 'Open page', 'open_page'],
+            [' ', 'Offline page', 'offline_page'],
         ]
     };
 
