@@ -14,7 +14,7 @@ loop do
   if headers['POST'] =~ /^\/add/
     data = client.read(headers["Content-Length"].to_i)
     params = Hash[URI::decode_www_form(data)]
-    html = '' if params['tag'] =~ /^<html>/
+    html = '' if params['tag'] =~ /^<!DOCTYPE html>/
     html = html + "#{params['tag']}\n"
     if params['tag'] =~ /^<\/html>/
       puts "=== #{Time.now} ==="
